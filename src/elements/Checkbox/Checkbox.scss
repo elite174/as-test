@@ -1,0 +1,48 @@
+.Checkbox {
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    padding: 10px 20px;
+
+    cursor: pointer;
+
+    &:hover {
+        background: #F1FCFF;
+    }
+
+    &-Input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0px;
+        height: 0px;
+
+        content: " ";
+        opacity: 0;
+
+        &:checked~.Checkbox-CheckMark {
+            background-image: url('./Checkbox.assets/Check.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    &-Text {
+        font-size: 13px;
+        line-height: 20px;
+
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    &-CheckMark {
+        width: 20px;
+        height: 20px;
+
+        border: 1px solid #9ABBCE;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+}
