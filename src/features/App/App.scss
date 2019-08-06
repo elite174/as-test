@@ -1,0 +1,56 @@
+.App {
+    height: 100%;
+    padding-top: 50px;
+
+    background: #F3F7FA;
+
+    &-Logo {
+        width: 60px;
+        height: 60px;
+        margin: auto;
+
+        background-image: url('./App.assets/Earth.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &-FilterControl {
+        display: flex;
+
+        width: 100%;
+        height: 50px;
+
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    &-FilterButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+
+        background: #ffffff;
+        cursor: pointer;
+
+        &_active {
+            background-color: #2196F3;
+            color: #ffffff;
+        }
+    }
+
+    &-Content {
+        display: flex;
+    }
+
+    &-LeftColumn {
+        margin-right: 20px;
+    }
+
+    &-RightColumn {
+        width: 100%;
+        height: 100%;
+    }
+}
