@@ -7,9 +7,11 @@
     padding: 10px 20px;
 
     cursor: pointer;
+    transition: background-color var(--transition);
+    will-change: background-color;
 
     &:hover {
-        background: #F1FCFF;
+        background-color: #F1FCFF;
     }
 
     &-Input {
@@ -31,6 +33,7 @@
 
     &-Text {
         font-size: 13px;
+        font-weight: normal;
         line-height: 20px;
 
         height: 20px;

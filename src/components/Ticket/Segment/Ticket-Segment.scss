@@ -1,0 +1,31 @@
+.Ticket {
+    &-Segment {
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &-SegmentTable {
+        width: 100%;
+
+        border-spacing: 0;
+        table-layout: fixed;
+    }
+
+    &-KeyRow {
+        font-size: 12px;
+        line-height: 18px;
+
+        color: var(--text-light);
+        text-transform: uppercase;
+    }
+
+    &-ValueRow {
+        font-size: 14px;
+        line-height: 21px;
+
+        text-transform: uppercase;
+    }
+}

@@ -7,10 +7,12 @@
     "@types/node": "12.6.9",
     "@types/react": "^16.8.24",
     "@types/react-dom": "16.8.5",
+    "@types/react-virtualized": "^9.21.4",
     "immer": "^3.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
+    "react-virtualized": "^9.21.1",
     "recn": "^0.1.1",
     "typescript": "3.5.3"
   },

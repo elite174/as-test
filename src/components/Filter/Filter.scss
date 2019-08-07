@@ -1,9 +1,21 @@
 .Filter {
+    flex-shrink: 0;
+
+    width: 232px;
+    padding: 10px 0;
+
+    background: var(--white);
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 
     &-Caption {
-        padding: 20px;
+        font-size: 12px;
+        line-height: 12px;
+
+        padding: 10px 20px;
+
+        box-sizing: border-box;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
     }
 }

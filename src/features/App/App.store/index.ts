@@ -1,27 +1,35 @@
 import produce from 'immer';
 
 import { ITicket } from "../../../api/typings";
-import { FilterState } from './const';
+import { FilterState, TransferCount } from './const';
 import { IBaseAction, ActionTypes } from './actions';
-
 
 export interface IStore {
   tickets: ITicket[];
-  filterState: FilterState;
+  sortBy: FilterState;
+  transferCounts: TransferCount[]
 };
 
 export const initialState: IStore = {
   tickets: [],
-  filterState: FilterState.cheap
+  sortBy: FilterState.cheap,
+  transferCounts: [TransferCount.all]
 };
 
 export const reducer = (state: IStore, action: IBaseAction) => produce(state, draft => {
   switch (action.type) {
     case ActionTypes.changeFilterState:
-      if (state.filterState !== action.payload) {
-        draft.filterState = action.payload;
+      if (state.sortBy !== action.payload) {
+        draft.sortBy = action.payload;
       }
 
       return draft;
+
+    case ActionTypes.addTickets:
+      draft.tickets = [...draft.tickets, ...action.payload];
+      return draft;
+
+    default:
+      return state;
   }
 });
