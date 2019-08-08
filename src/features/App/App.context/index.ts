@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { initialState, IStore } from '../App.store';
 import { IBaseAction } from '../App.store/actions';
 
@@ -9,5 +10,5 @@ interface IAppContext {
 
 export const AppContext = React.createContext<IAppContext>({
     store: initialState,
-    dispatch: () => { }
+    dispatch: () => {}
 });

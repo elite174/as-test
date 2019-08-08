@@ -1,4 +1,4 @@
-import { FilterState, TransferCountNames } from "../const";
+import { TransferCountsNames } from "../const";
 import { ITicket } from "../../../../api/typings";
 
 export interface IBaseAction {
@@ -6,23 +6,18 @@ export interface IBaseAction {
     payload?: any;
 };
 
+/** Типы событий хранилища */
 export enum ActionTypes {
-    changeFilterState = 'changeFilterState',
     addTickets = 'addTickets',
     setTransferCount = 'setTransferCount'
 }
-
-export const changeFilterState = (newState: FilterState): IBaseAction => ({
-    type: ActionTypes.changeFilterState,
-    payload: newState,
-});
 
 export const addTickets = (tickets: ITicket[]): IBaseAction => ({
     type: ActionTypes.addTickets,
     payload: tickets,
 });
 
-export const setTransferCount = (transferCountName: TransferCountNames) => ({
+export const setTransferCount = (transferCountName: TransferCountsNames) => ({
     type: ActionTypes.setTransferCount,
     payload: transferCountName,
 });

@@ -10,15 +10,15 @@ import './Ticket.scss';
 export const cnTicket = cn('Ticket');
 
 interface ITicketProps {
+    /** Информация о билете */
     ticket: ITicket;
-    style?: React.CSSProperties;
 }
 
 export const Ticket: React.FC<ITicketProps> = React.memo(props => {
-    const { ticket, style } = props;
+    const { ticket } = props;
 
     return (
-        <div className={cnTicket()} style={style}>
+        <div className={cnTicket()}>
             <div className={cnTicket('Row')}>
                 <div className={cnTicket('Price')}>{formatPrice(ticket.price)}</div>
                 <div className={cnTicket('CarrierLogo')} style={{
@@ -28,7 +28,7 @@ export const Ticket: React.FC<ITicketProps> = React.memo(props => {
             <div className={cnTicket('Info')}>
                 {ticket.segments.map((segment, i) => (
                     <TicketSegment
-                        // Здесь мы не будем ничего делать с сегментами,
+                        // Сегменты не меняются,
                         // поэтому можно использовать такой ключ
                         key={`segment-${i}`}
                         {...segment} />

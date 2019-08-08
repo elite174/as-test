@@ -12,14 +12,22 @@ import './TicketList.scss';
 const cnTicketList = cn('TicketList');
 
 interface ITicketListProps {
+    /** Метод сортировки */
     sortBy: FilterState;
 }
+
+/** Высота строки с билетом */
+const rowHeight = 204;
+/** Ширина листа с билетами */
+const listWidth = 503;
+/** Высота всего листа с билетами */
+const listHeight = 1015;
 
 export const TicketList: React.FC<ITicketListProps> = React.memo(props => {
     const { sortBy } = props;
     const { store } = useContext(AppContext);
-
-    const renderTickets = useMemo(() => store.tickets
+    const renderedTickets = useMemo(() => store.tickets
+        /** Фильтруем билеты по пересадкам */
         .filter(ticket => {
             if (store.transferCounts.all) {
                 return true;
@@ -35,24 +43,27 @@ export const TicketList: React.FC<ITicketListProps> = React.memo(props => {
             return true;
         })
         .sort(sortBy === FilterState.cheap ? priceComparator : durationComparator)
-        .map(ticket => <Ticket ticket={ticket} />), [store.tickets, sortBy, store.transferCountsValues]);
+        .map(ticket => <Ticket ticket={ticket} />), [store.tickets, sortBy, store.transferCountsValues, store.transferCounts.all]);
 
+    /** Render-фуннкция для virtualized листа */
     const rowRenderer = useCallback(({ key, index, style }) => {
         return (
             <div style={style} key={key}>
-                {renderTickets[index]}
+                {renderedTickets[index]}
             </div>
         );
-    }, [renderTickets]);
+    }, [renderedTickets]);
 
     return (
         <div className={cnTicketList()}>
-            <List
-                rowCount={renderTickets.length}
-                rowHeight={204}
-                width={503}
-                height={1015}
-                rowRenderer={rowRenderer} />
+            {renderedTickets.length === 0 ?
+                <div className={cnTicketList('EmptyResult')}>билеты не найдены</div> : <List
+                    rowCount={renderedTickets.length}
+                    rowHeight={rowHeight}
+                    width={listWidth}
+                    height={listHeight}
+                    rowRenderer={rowRenderer} />}
+
         </div>
     );
 });

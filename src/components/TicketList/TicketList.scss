@@ -1,4 +1,9 @@
 .TicketList {
     height: 100%;
     margin-bottom: 120px;
+
+    &-EmptyResult {
+        text-align: center;
+        text-transform: uppercase;
+    }
 }

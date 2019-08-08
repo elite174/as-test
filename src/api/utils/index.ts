@@ -1,5 +1,6 @@
 import { endpoint, routes } from "../const";
 
+/** Формирует ссылку для запроса */
 export const makeUrl = (route: routes, searchId?: string) => {
   const url = `${endpoint}${route}`;
 

@@ -3,7 +3,7 @@ export enum FilterState {
     fast
 };
 
-export enum TransferCountNames {
+export enum TransferCountsNames {
     all = 'all',
     zero = 'zero',
     one = 'one',
@@ -11,7 +11,7 @@ export enum TransferCountNames {
     three = 'three'
 };
 
-export const TransferCounts: Record<TransferCountNames, number> = {
+export const TransferCounts: Record<TransferCountsNames, number> = {
     all: -1,
     zero: 0,
     one: 1,
@@ -19,7 +19,7 @@ export const TransferCounts: Record<TransferCountNames, number> = {
     three: 3,
 };
 
-export const initialTransferCounts: Record<TransferCountNames, boolean> = {
+export const initialTransferCounts: Record<TransferCountsNames, boolean> = {
     all: true,
     one: false,
     two: false,

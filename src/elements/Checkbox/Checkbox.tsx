@@ -7,8 +7,11 @@ const cnCheckbox = cn('Checkbox');
 
 interface ICheckboxProps {
     checked?: boolean;
+    /** Текст чекбокса */
     text: string;
+    /** Обработчик клика чекбокса */
     onCheckboxChange?: React.ChangeEventHandler<HTMLInputElement>;
+    /** Имя чекбокса */
     name?: string;
 }
 

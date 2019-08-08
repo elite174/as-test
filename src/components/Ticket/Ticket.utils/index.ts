@@ -76,4 +76,5 @@ export const formatStops = (stopsCount: number) => {
     };
 };
 
+/** Дополняет строку нулями */
 export const padTime = (time: number) => String(time).padStart(2, '0');

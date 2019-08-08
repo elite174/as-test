@@ -1,13 +1,17 @@
 import produce from 'immer';
 
 import { ITicket } from "../../../api/typings";
-import { FilterState, TransferCountNames, TransferCounts, initialTransferCounts } from './const';
+import { FilterState, TransferCountsNames, TransferCounts, initialTransferCounts } from './const';
 import { IBaseAction, ActionTypes } from './actions';
 
 export interface IStore {
+  /** Список билетов */
   tickets: ITicket[];
+  /** Метод сортировки билетов */
   sortBy: FilterState;
-  transferCounts: Record<TransferCountNames, boolean>,
+  /** Выбранные фильтры пересадок */
+  transferCounts: Record<TransferCountsNames, boolean>,
+  /** Массив значений выбранных пересадок */
   transferCountsValues: number[];
 };
 
@@ -20,42 +24,37 @@ export const initialState: IStore = {
 
 export const reducer = (state: IStore, action: IBaseAction) => produce(state, draft => {
   switch (action.type) {
-    case ActionTypes.changeFilterState:
-      if (state.sortBy !== action.payload) {
-        draft.sortBy = action.payload;
-      }
-
-      return draft;
-
     case ActionTypes.addTickets:
       draft.tickets = [...draft.tickets, ...action.payload];
       return draft;
 
     case ActionTypes.setTransferCount:
-      if (action.payload === TransferCountNames.all) {
+      /** Если выбрали "Все", то обнуляем остальные чекбоксы */
+      if (action.payload === TransferCountsNames.all) {
         draft.transferCounts = initialTransferCounts
         draft.transferCountsValues = [TransferCounts.all];
 
         return draft;
       }
 
-      draft.transferCounts[action.payload as TransferCountNames] = !draft.transferCounts[action.payload as TransferCountNames];
+      draft.transferCounts[action.payload as TransferCountsNames] = !draft.transferCounts[action.payload as TransferCountsNames];
       const newTransferCountsValues= [];
 
-      if (draft.transferCounts[action.payload as TransferCountNames]) {
-        draft.transferCounts[TransferCountNames.all] = false;
+      if (draft.transferCounts[action.payload as TransferCountsNames]) {
+        draft.transferCounts[TransferCountsNames.all] = false;
       }
 
-
+      /** Формируем новый список значений фильтра пересадок */
       for (const key in draft.transferCounts) {
-        if (draft.transferCounts[key as TransferCountNames]) {
-          newTransferCountsValues.push(TransferCounts[key as TransferCountNames]);
+        if (draft.transferCounts[key as TransferCountsNames]) {
+          newTransferCountsValues.push(TransferCounts[key as TransferCountsNames]);
         }
       }
 
+      /** Если список пустой, то нужно выбрать вариант "Все" */
       if (newTransferCountsValues.length === 0) {
         newTransferCountsValues.push(TransferCounts.all);
-        draft.transferCounts[TransferCountNames.all] = true;
+        draft.transferCounts[TransferCountsNames.all] = true;
       }
 
       draft.transferCountsValues = newTransferCountsValues;

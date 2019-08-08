@@ -1,58 +1,61 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState, useCallback } from 'react';
 import { cn } from 'recn';
 
-import { Filter } from '../../components/Filter/Filter';
+import { AppContext } from './App.context';
+import { TransferFilter } from '../../components/TransferFilter/TransferFilter';
 import { reducer, initialState } from './App.store';
-import { FilterState, TransferCountNames } from './App.store/const';
-import { changeFilterState, addTickets, setTransferCount } from './App.store/actions';
+import { FilterState, TransferCountsNames } from './App.store/const';
+import { addTickets, setTransferCount } from './App.store/actions';
 import { TicketList } from '../../components/TicketList/TicketList';
 import { makeRequest } from '../../api';
 import { routes } from '../../api/const';
 
 import './App.scss';
 import './App.constants.scss';
-import { AppContext } from './App.context';
 
 const cnApp = cn('App');
 
-export const App = React.memo(() => {
+export const App: React.FC<{}> = React.memo(() => {
   const [store, dispatch] = useReducer(reducer, initialState);
-
-  const pickCheckbox = (checkboxName: TransferCountNames) => dispatch(setTransferCount(checkboxName));
+  const [sortBy, setSortBy] = useState(FilterState.cheap);
+  const chechboxHandler = useCallback((checkboxName: TransferCountsNames) =>
+    dispatch(setTransferCount(checkboxName)), []);
 
   useEffect(() => {
+    /** Получаем searchId */
     const getSearchId = async () => {
       const response = await makeRequest(routes.search);
       const json = await response.json();
+
       return json.searchId;
     };
 
+    /** Получаем пачку билетов */
     const getFlights = async (searchId: string) => {
+
       const response = await makeRequest(routes.tickets, searchId);
       let json;
 
       try {
         json = await response.json();
       } catch (err) {
-        return true;
+        /** Прекращаем поиск, если сервер ответил ошибкой */
+        return;
       }
 
       dispatch(addTickets(json.tickets));
 
-      return json.stop;
-    };
-
-    const fetchAllFlights = async (searchId: string) => {
-      let isStop = await getFlights(searchId);
-
-      while (!isStop) {
-        isStop = await getFlights(searchId);
+      /** Продолжаем получать пачки билетов */
+      if (!json.stop) {
+        setTimeout(() => getFlights(searchId), 0);
       }
     };
 
+    /** Делаем запросы на сервер */
     const request = async () => {
       const searchId = await getSearchId();
-      await fetchAllFlights(searchId);
+
+      await getFlights(searchId);
     };
 
     request();
@@ -64,30 +67,27 @@ export const App = React.memo(() => {
         <div className={cnApp('Logo')}></div>
         <div className={cnApp('Content')}>
           <div className={cnApp('LeftColumn')}>
-            <Filter pickCheckbox={pickCheckbox} />
+            <TransferFilter checkboxHandler={chechboxHandler} />
           </div>
           <div className={cnApp('RightColumn')}>
             <div className={cnApp('FilterControl')}>
               <div
-                onClick={() => dispatch(changeFilterState(FilterState.cheap))}
-                className={cnApp('FilterButton',
-                  { active: store.sortBy === FilterState.cheap }
-                )}>
+                onClick={() => setSortBy(FilterState.cheap)}
+                className={cnApp('FilterButton', { active: sortBy === FilterState.cheap })}
+              >
                 Самый дешёвый
-          </div>
+              </div>
               <div
-                onClick={() => dispatch(changeFilterState(FilterState.fast))}
-                className={cnApp('FilterButton',
-                  { active: store.sortBy === FilterState.fast }
-                )}>
+                onClick={() => setSortBy(FilterState.fast)}
+                className={cnApp('FilterButton', { active: sortBy === FilterState.fast })}
+              >
                 Самый быстрый
-          </div>
+              </div>
             </div>
-            <TicketList
-              sortBy={store.sortBy} />
+            <TicketList sortBy={sortBy} />
           </div>
         </div>
       </div>
-    </AppContext.Provider>
+    </AppContext.Provider >
   );
 });
