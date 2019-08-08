@@ -53,7 +53,7 @@ export const App = React.memo(() => {
     };
 
     request();
-  }, [])
+  }, []);
 
   return (
     <div className={cnApp()}>

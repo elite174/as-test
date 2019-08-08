@@ -11,11 +11,6 @@ export interface IFilterProps {
 }
 
 export const Filter = React.memo(() => {
-
-    const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //pickCheckbox(e.target.name)
-    }
-
     return (
         <div className={cnFilter()}>
             <div className={cnFilter('Caption')}>Количество пересадок</div>

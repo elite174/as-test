@@ -6,23 +6,26 @@ import { formatStops, formatFlightTime, padTime } from '../Ticket.utils';
 import './Ticket-Segment.scss';
 
 interface ITicketSegmentProps {
-    // Код города (iata)
+    /** Код города (iata) */
     origin: string;
-    // Код города (iata)
+    /** Код города (iata) */
     destination: string;
-    // Массив кодов (iata) городов с пересадками
+    /** Массив кодов (iata) городов с пересадками */
     stops: string[];
-    // Общее время перелёта в минутах
+    /** Общее время перелёта в минутах */
     duration: number;
+    /** Дата и время вылета */
     date: string;
 }
-(new Date())
+
 export const TicketSegment: React.FC<ITicketSegmentProps> = React.memo(props => {
     const { origin, destination, duration, stops, date } = props;
-    let d = new Date(date);
-    const departureTime = `${padTime(d.getHours())}:${padTime(d.getMinutes())}`
-    d = new Date(d.getTime() + duration * 60 * 1000);
-    const arrivalTime = `${padTime(d.getHours())}:${padTime(d.getMinutes())}`;
+
+    /** Формируем время отлёта и прилёта */
+    let ticketDate = new Date(date);
+    const departureTime = `${padTime(ticketDate.getHours())}:${padTime(ticketDate.getMinutes())}`;
+    ticketDate = new Date(ticketDate.getTime() + duration * 60 * 1000);
+    const arrivalTime = `${padTime(ticketDate.getHours())}:${padTime(ticketDate.getMinutes())}`;
 
     return (
         <div className={cnTicket('Segment')}>

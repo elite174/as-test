@@ -23,8 +23,13 @@ module.exports = {
       "sourceType": "module"
   },
   "rules": {
-      "no-unused-vars": ["error", { "varsIgnorePattern": "Db|Express" }],
+      "no-unused-vars": "error",
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+      "no-console": "error",
+      "no-multi-spaces": "error",
+      "no-trailing-spaces": "error",
       "semi": ["error", "always"],
+      "curly": "error",
       "@typescript-eslint/no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
       "react/jsx-uses-react": 2,
       "react/jsx-uses-vars": 2,

@@ -16,6 +16,11 @@
     "recn": "^0.1.1",
     "typescript": "3.5.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -39,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "husky": "^3.0.2",
     "node-sass": "^4.12.0"
   }
 }

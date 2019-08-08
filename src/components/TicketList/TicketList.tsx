@@ -28,9 +28,8 @@ export const TicketList: React.FC<ITicketListProps> = React.memo(props => {
             <div style={style} key={key}>
                 {renderTickets[index]}
             </div>
-        )
+        );
     }, [renderTickets]);
-
 
     return (
         <div className={cnTicketList()}>
