@@ -3,19 +3,22 @@ import { cn } from 'recn';
 
 import { Filter } from '../../components/Filter/Filter';
 import { reducer, initialState } from './App.store';
-import { FilterState } from './App.store/const';
-import { changeFilterState, addTickets } from './App.store/actions';
+import { FilterState, TransferCountNames } from './App.store/const';
+import { changeFilterState, addTickets, setTransferCount } from './App.store/actions';
 import { TicketList } from '../../components/TicketList/TicketList';
 import { makeRequest } from '../../api';
 import { routes } from '../../api/const';
 
 import './App.scss';
 import './App.constants.scss';
+import { AppContext } from './App.context';
 
 const cnApp = cn('App');
 
 export const App = React.memo(() => {
   const [store, dispatch] = useReducer(reducer, initialState);
+
+  const pickCheckbox = (checkboxName: TransferCountNames) => dispatch(setTransferCount(checkboxName));
 
   useEffect(() => {
     const getSearchId = async () => {
@@ -56,34 +59,35 @@ export const App = React.memo(() => {
   }, []);
 
   return (
-    <div className={cnApp()}>
-      <div className={cnApp('Logo')}></div>
-      <div className={cnApp('Content')}>
-        <div className={cnApp('LeftColumn')}>
-          <Filter />
-        </div>
-        <div className={cnApp('RightColumn')}>
-          <div className={cnApp('FilterControl')}>
-            <div
-              onClick={() => dispatch(changeFilterState(FilterState.cheap))}
-              className={cnApp('FilterButton',
-                { active: store.sortBy === FilterState.cheap }
-              )}>
-              Самый дешёвый
+    <AppContext.Provider value={{ store, dispatch }}>
+      <div className={cnApp()}>
+        <div className={cnApp('Logo')}></div>
+        <div className={cnApp('Content')}>
+          <div className={cnApp('LeftColumn')}>
+            <Filter pickCheckbox={pickCheckbox} />
           </div>
-            <div
-              onClick={() => dispatch(changeFilterState(FilterState.fast))}
-              className={cnApp('FilterButton',
-                { active: store.sortBy === FilterState.fast }
-              )}>
-              Самый быстрый
+          <div className={cnApp('RightColumn')}>
+            <div className={cnApp('FilterControl')}>
+              <div
+                onClick={() => dispatch(changeFilterState(FilterState.cheap))}
+                className={cnApp('FilterButton',
+                  { active: store.sortBy === FilterState.cheap }
+                )}>
+                Самый дешёвый
           </div>
+              <div
+                onClick={() => dispatch(changeFilterState(FilterState.fast))}
+                className={cnApp('FilterButton',
+                  { active: store.sortBy === FilterState.fast }
+                )}>
+                Самый быстрый
           </div>
-          <TicketList
-            sortBy={store.sortBy}
-            tickets={store.tickets} />
+            </div>
+            <TicketList
+              sortBy={store.sortBy} />
+          </div>
         </div>
       </div>
-    </div>
+    </AppContext.Provider>
   );
 });

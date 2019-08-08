@@ -1,4 +1,4 @@
-import { FilterState, TransferCount } from "../const";
+import { FilterState, TransferCountNames } from "../const";
 import { ITicket } from "../../../../api/typings";
 
 export interface IBaseAction {
@@ -22,7 +22,7 @@ export const addTickets = (tickets: ITicket[]): IBaseAction => ({
     payload: tickets,
 });
 
-export const setTransferCount = (transferCounts: TransferCount[]) => ({
-    action: ActionTypes.setTransferCount,
-    payload: transferCounts,
+export const setTransferCount = (transferCountName: TransferCountNames) => ({
+    type: ActionTypes.setTransferCount,
+    payload: transferCountName,
 });
