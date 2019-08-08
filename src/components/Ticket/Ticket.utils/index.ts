@@ -10,7 +10,7 @@ export const formatFlightTime = (time: number) => {
 
     let formattedString = `${minutes}м`;
 
-    if (hours) {
+    if (hours || days) {
         formattedString = `${hours}ч ` + formattedString;
     }
 
@@ -29,7 +29,7 @@ export const formatPrice = (price: number) => {
     let formattedString = String(Math.floor(price));
 
     if (formattedString.length < 4) {
-        return formattedString;
+        return formattedString + ' Р';
     }
 
     const prefix = formattedString.slice(0, formattedString.length % 3);

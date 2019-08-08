@@ -23,11 +23,7 @@ export const TicketList: React.FC<ITicketListProps> = React.memo(props => {
         .sort(sortBy === FilterState.cheap ? priceComparator : durationComparator)
         .map(ticket => <Ticket ticket={ticket} />), [tickets, sortBy]);
 
-    const rowRenderer = useCallback(({
-        key,         // Unique key within array of rows
-        index,       // Index of row within collection
-        style        // Style object to be applied to row (to position it)
-    }) => {
+    const rowRenderer = useCallback(({ key, index, style }) => {
         return (
             <div style={style} key={key}>
                 {renderTickets[index]}
