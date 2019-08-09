@@ -3,41 +3,19 @@
     flex-direction: column;
 
     height: 100%;
-    padding-top: 50px;
 
     background: var(--background);
     box-sizing: border-box;
     color: var(--text-dark);
 
     &-Logo {
-        position: relative;
         flex-shrink: 0;
 
-        width: 60px;
-        height: 60px;
-        margin: auto;
-        margin-bottom: 50px;
+        height: 160px;
 
-        background-image: url('./App.assets/Earth.svg');
+        background-image: url('./App.assets/Logo.svg');
         background-position: center;
         background-repeat: no-repeat;
-
-        &::after {
-            display: block;
-
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            width: 60px;
-            height: 60px;
-
-            background-image: url('./App.assets/Plane.svg');
-            background-position: center;
-            background-repeat: no-repeat;
-            content: "";
-
-        }
     }
 
     &-FilterControl {
