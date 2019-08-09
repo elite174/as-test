@@ -63,7 +63,6 @@ export const TicketList: React.FC<ITicketListProps> = React.memo(props => {
                     width={listWidth}
                     height={listHeight}
                     rowRenderer={rowRenderer} />}
-
         </div>
     );
 });
